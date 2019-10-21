@@ -51,6 +51,7 @@ var officeItemHistory = require('./routes/officeItemHistoryRouter');
 var bookLibrary = require("./routes/bookLibraryRouter");
 var yesCalendar = require("./routes/yesCalendarRouter");
 var yesCalendarType = require("./routes/yesCalendarTypeRouter");
+var mobile = require("./routes/mobileRouter");
 
 var debug = require('debug')('APP');
 var app = express();
@@ -196,6 +197,8 @@ app.use(logger('dev'));
 // app.use(function(req,res,next){
     
 // });
+
+app.use('/mobile', mobile);
 
 // if session hasn`t loginid, redirect login page
 app.use(function(req,res,next){

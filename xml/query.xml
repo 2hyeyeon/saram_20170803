@@ -306,6 +306,9 @@
         app.doc_num, app.submit_id
         , (SELECT mem.name FROM members_tbl mem WHERE mem.id = app.submit_id) submit_name
         , (SELECT mem.dept_code FROM members_tbl mem WHERE mem.id = app.submit_id) submit_dept_code
+        , (SELECT deptCode.name FROM members_tbl mem 
+            LEFT JOIN dept_code_tbl deptCode ON deptCode.code = mem.dept_code
+            WHERE mem.id = app.submit_id) submit_dept_name
         , app.manager_id
         , (SELECT mem.name FROM members_tbl mem WHERE mem.id = app.manager_id) manager_name
         , submit_date , decide_date , submit_comment , decide_comment , start_date , end_date , office_code
@@ -2081,6 +2084,17 @@
         ORDER BY m.dept_code, m.part_code, m.position_code, m.name, c.date
       </query>
     </group>
+    <group id="mobile">
+      <query id="getVersion">
+        select version from mobile_tbl order by date desc limit 1;
+      </query>
+      <query id="setVersion">
+        insert into mobile_tbl
+          (version, date)
+        VALUES
+          (?, now())
+      </query>
+    </group>
     <group id ="message">
       <query id="getMessage">
         select * from msg_tbl where no = 1
@@ -2639,7 +2653,7 @@
   <group id ="statistics">
     <query id="selectAvgInOutTime"> 
       SELECT name, sec_to_time(avg(time_to_sec(in_time))) as in_time_avg, sec_to_time(avg(if(time_to_sec(out_time) &lt; 54000, 86400+time_to_sec(out_time), time_to_sec(out_time)))) as out_time_avg 
-      FROM commute.commute_result_tbl 
+      FROM commute_result_tbl 
       WHERE year = ? AND date &gt;= ? and date &lt;= ? AND 
         work_type not in (30, 31, 40, 41) AND 
         (out_office_code is NULL OR out_office_code != 'W01') AND
@@ -2955,7 +2969,7 @@
       SELECT cal.calendar_id, cal.member_id, cal.title, cal.all_day, date_format(cal.start, "%Y-%m-%d") AS start, date_format(cal.end, "%Y-%m-%d") as end, 
         cal.alarm, cal.calendar_type, cal.memo, cal.reg_time, datediff(cal.end, cal.start) as date_diff,
         cal_type.color, cal_type.fcolor, cal_type.calendar_type_str
-      FROM commute.calendar_tbl cal LEFT JOIN calendar_type_tbl cal_type ON cal.calendar_type = cal_type.calendar_type_id
+      FROM calendar_tbl cal LEFT JOIN calendar_type_tbl cal_type ON cal.calendar_type = cal_type.calendar_type_id
       WHERE cal.member_id = ? AND ((cal.start BETWEEN ? AND ?) OR ( cal.end BETWEEN ? AND ? ))
       ORDER BY date_diff DESC
     </query>
