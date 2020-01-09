@@ -58,6 +58,11 @@ router.route('/:date')
     holiday.deleteHoliday().then(function(){
         res.send({msg : "Delete Data Success", count: 1});    
     });
+}).put(function(req, res){
+    var holiday = new Holiday(req.body);
+    debug("Insert Data Success By Manager. Date = "+req.body.date);
+    holiday.insertHoliday();
+    res.send({msg : "Insert Data Success By Manager", count : 1, date : req.body.date});
 });
 
 
