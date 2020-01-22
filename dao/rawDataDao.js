@@ -59,10 +59,15 @@ RawDataDao.prototype.insertRawDataCompanyAccess =  function (data) {
 };
 
 RawDataDao.prototype.selectRawDataList =  function (data, id) {
-    if((_.isUndefined(data.dept) || data.dept == "전체") && id === '%')
+    if((_.isUndefined(data.dept) || data.dept == "전체") && id === '%') {
         return db.query(group, 'selectRawDataListAll', [data.start, data.end]);
-    else
-        return db.query(group, 'selectRawDataList', [data.start, data.end, data.dept, id]);
+    } else {
+        if (id === '%') { // Manager
+            return db.query(group, 'selectRawDataList', [data.start, data.end, data.dept, id]);
+        } else { // User
+            return db.query(group, 'selectRawDataListUser', [data.start, data.end, id]);
+        }
+    }
 };
 
 RawDataDao.prototype.selectRawDataListV2 =  function (data, id) {

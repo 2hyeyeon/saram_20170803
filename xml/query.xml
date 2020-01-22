@@ -146,6 +146,14 @@
           where
             str_to_date(char_date, "%Y-%m-%d %H:%i:%S") between str_to_date(?,"%Y-%m-%d") and adddate(str_to_date(?,"%Y-%m-%d"), 1) AND department = ? AND id like ?
         </query>
+        <query id="selectRawDataListUser">
+          select
+            str_to_date(char_date, "%Y-%m-%d %h:%i") date, commute_base_tbl.*
+          from
+            commute_base_tbl
+          where
+            str_to_date(char_date, "%Y-%m-%d %H:%i:%S") between str_to_date(?,"%Y-%m-%d") and adddate(str_to_date(?,"%Y-%m-%d"), 1) AND id like ?
+        </query>
         <query id="selectRawDataListAll">
           select
             str_to_date(char_date, "%Y-%m-%d %h:%i") date, commute_base_tbl.*
