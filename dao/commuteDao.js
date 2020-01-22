@@ -12,7 +12,11 @@ CommuteDao.prototype.selectCommute =  function (data, id, dept) {
         if (data.dept === undefined || data.dept === null || data.dept === '') {
             data.dept = dept
         }
-        return db.query(group, 'selectCommute', [data.startDate, data.endDate, data.dept, id]);
+        if (id === '%') { // Manager
+            return db.query(group, 'selectCommute', [data.startDate, data.endDate, data.dept, id]);
+        } else { // User
+            return db.query(group, 'selectCommuteUser', [data.startDate, data.endDate, id]);
+        }
     }
 };
 
