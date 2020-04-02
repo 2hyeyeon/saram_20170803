@@ -70,9 +70,9 @@ define([
                                     function(){
                                         dialog.close();
                                         that._renderTable();
-                                        Dialog.info(i18nCommon.HOLIDAY_MANAGER.MSG.HOLIDAY_ADD_COMPLETE);
+										Dialog.info(i18nCommon.HOLIDAY_MANAGER.ADD_DIALOG.MSG.HOLIDAY_ADD_COMPLETE);
                                     }, function(){
-                                        dialog.close(i18nCommon.HOLIDAY_MANAGER.MSG.HOLIDAY_ADD_FAIL);
+                                        dialog.close(i18nCommon.HOLIDAY_MANAGER.ADD_DIALOG.MSG.HOLIDAY_ADD_FAIL);
                                         Dialog.error();
                                     }
                                 );
