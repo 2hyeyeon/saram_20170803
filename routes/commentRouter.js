@@ -8,6 +8,10 @@ router.route('/')
 .get(function(req, res, next){
 	var adminString=sessionManager.getAdminString(req.cookies.saram);
 	var query = req.query;
+	debug("Comment adminString = "+adminString);
+	debug("Comment query.managerId = "+query.managerId);
+	debug("Comment query.onlySubmit = "+query["onlySubmit"]);
+	debug("Comment query.id = "+query.id);
 	if (adminString === '%' && query.managerId !== undefined) {
 		Comment.getCommentCountToManager(query.managerId).then(function(result) {
 			return res.send(result);

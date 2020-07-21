@@ -236,7 +236,7 @@ define([
                         break;
                     default :
                         var arrInsertDate;
-                        if (param.office_code == "W03") {
+                        if (param.office_code == "W03" || param.office_code == "W02") {
                             arrInsertDate = this.getDatePariod(true);
                         }else {
                             arrInsertDate = this.getDatePariod(false);
@@ -346,7 +346,7 @@ define([
             var userId = this.options["submit_id"];
             var arrInsertDate;
 
-            if (this.options["office_code"] == "W03") {
+            if (this.options["office_code"] == "W03" || this.options["office_code"] == "W02") {
                 arrInsertDate = this.getDatePariod(true);
             }
             else {
@@ -462,7 +462,7 @@ define([
         addOutOfficeData: function(_approvalCollection) {
             var dfd = new $.Deferred();
             var arrInsertDate;
-            if (this.options["office_code"] == "W03") {
+            if (this.options["office_code"] == "W03" || this.options["office_code"] == "W02") {
                 arrInsertDate = this.getDatePariod(true);
             }
             else {

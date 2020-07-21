@@ -136,10 +136,10 @@ router.route('/bulk')
     console.log(id);
     if(id == "updateState"){
         approval.updateApprovalState(req.body.data).then(function(e){
-            debug("Complete Update Approval."); 
+            debug("Complete Update Approval State."); 
             res.send({success:true, msg:"Complete Update Approval."});
         }).catch(function(e){
-            debug("Error Update Approval.");
+            debug("Error Update Approval State.");
             debug(e);
             res.status(500);
             res.send({
@@ -150,7 +150,7 @@ router.route('/bulk')
         });
     }else{
         approval.updateApprovalConfirm(req.body).then(function(e){
-            debug("Complete Update Approval."); 
+            debug("Complete Update Approval Confirm."); 
             res.send({success:true, msg:"Complete Update Approval."});
             if(!_.isUndefined(req.body.outOffice)){
                 if(req.body.outOffice.state == "결재완료"){
@@ -162,7 +162,7 @@ router.route('/bulk')
                 }    
             }
         }).catch(function(e){
-            debug("Error Update Approval.");
+            debug("Error Update Approval Confirm.");
             debug(e);
             res.status(500);
             res.send({

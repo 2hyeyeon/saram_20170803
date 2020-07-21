@@ -186,15 +186,19 @@ define([
             this.isSuwon = model.get("is_suwon");
             if (this.isSuwon === undefined || this.isSuwon === null) {
               if (this.department.indexOf("본사") > -1) {
-                  this.isSuwon = 0;
+                this.isSuwon = 0;
               }else if (this.department.indexOf("품질검증") > -1) {
-                  this.isSuwon = 1;
+                this.isSuwon = 1;
               }
               else if (this.department === "개발품질팀(수원)") {
-                  this.isSuwon = 1;
+                this.isSuwon = 1;
+              }
+              else if (this.department === "무선랜검증팀") {
+                // 8시 이전 출근 후 야근 결재 시 '무선랜검증팀'의 출근 기준시간이 7시 -> 8시로 변경되는 문제로 인한 추가
+                this.isSuwon = 1;
               }
               else {
-                  this.isSuwon = 0;
+                this.isSuwon = 0;
               }
             }
         },
@@ -627,7 +631,10 @@ define([
             }
             else {
                 if (_.isNull(this.inTime) && _.isNull(this.outTime)) {
-                    this.outOfficeCode = null;
+                    // 휴일에 출장일 경우, 휴일근무 & 출장 둘다 표시되도록 예외 처리.
+                    if (this.outOfficeCode != "W02") {
+                        this.outOfficeCode = null;
+                    }
                     this.vacationCode = null;
                 }
             }
@@ -811,7 +818,14 @@ define([
                         this.workType = WORKTYPE._HOLIDAYWORK;
                     }
                 }
-
+                else if (this.outOfficeCode == "W02") { // 휴일 출장일때
+                    if (this.checkInOffice) { // 휴일 근무 결재가 완료 된 경우
+                        this.workType = WORKTYPE.HOLIDAYWORK;
+                    } else { // 휴일 근무 결재가 되지 않은 경우
+                        this.workType = WORKTYPE._HOLIDAYWORK;
+                    }
+                }
+                
                 /**
                  * 수당 외 근무시간 계산
                  *  초과근무 시간 - 480분(8시간)

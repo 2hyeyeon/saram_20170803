@@ -560,7 +560,7 @@ define([
         addOutOfficeData: function(_approvalCollection, data) {
             var dfd = new $.Deferred();
             var arrInsertDate;
-            if (data["office_code"] == "W03") {
+            if (data["office_code"] == "W03" || data["office_code"] == "W02") {
                 arrInsertDate = this.getDatePariod(true);
             }
             else {
