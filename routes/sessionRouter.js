@@ -27,7 +27,7 @@ var transport = nodemailer.createTransport(smtpTransport({
     port: 25,
     auth: {
         user: 'webmaster@yescnc.co.kr',
-        pass: 'Yes112233'
+        pass: '121512yes'
     },
     connectionTimeout:10000
 }));
