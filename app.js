@@ -13,6 +13,7 @@ var util = require("util");
 var schedule = require('node-schedule');
 
 //lib router config
+// test
 var sessionManager = require('./lib/sessionManager');
 var index = require('./routes/index');
 var user = require('./routes/userRouter');
